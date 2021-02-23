@@ -1,5 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
+import { v4 as uuid } from 'uuid';
+
 @Entity("users")
 class User {
   
@@ -16,6 +18,15 @@ class User {
 
   @CreateDateColumn()
   created_at: Date;
+
+  constructor() {
+    // se o id não axistir
+    if (!this.id) {
+      // vai atribuir o valor do id para uuid para gerar vários hashs
+      // aleatórios
+      this.id = uuid();
+    }
+  }
 }
 
 export { User };
