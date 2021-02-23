@@ -1,8 +1,15 @@
 import { Request, Response } from 'express';
 
-export default async function create(request: Request, response: Response) {
-  const body = request.body;
+import { usersRepository } from '../../repositories/usersRepository';
 
-  console.log(body);
-  return response.send();
+export default async function create(request: Request, response: Response) {
+  const { name, email } = request.body;
+
+  const user = usersRepository.create({
+    name, email
+  });
+
+  await usersRepository.save(user);
+
+  return response.json(user);
 };
