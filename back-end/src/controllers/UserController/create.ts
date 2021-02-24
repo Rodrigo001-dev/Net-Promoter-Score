@@ -1,18 +1,12 @@
 import { Request, Response } from 'express';
 
-import { getRepository } from 'typeorm';
-import { User } from '../../models/User';
+import { getCustomRepository } from 'typeorm';
+import { UsersRepository } from '../../repositories/UsersRepository';
 
 export default async function create(request: Request, response: Response) {
   const { name, email } = request.body;
 
-  // o repositório permite que se faça algumas ações dentro do banco de dados,
-  // manipulação de dados, inserção de dados, criação de tabela, edição de
-  // alguns atributos.
-  // toda a comunicação com o banco de dados vai ser feita pelos repositórios
-  // para cada entidade vai ter um repositório expecífico
-
-  const usersRepository = getRepository(User);
+  const usersRepository = getCustomRepository(UsersRepository);
 
   // SELECT * FROM USERS WHERE email = "email"
   const userAlreadyExists = await usersRepository.findOne({
