@@ -1,3 +1,7 @@
+import request from 'supertest';
+import { app } from '../app';
+
+import createConnection from '../database';
 
 // vai descrever o que ser feito
 // describe("First", () => {
@@ -20,3 +24,10 @@
     // expect(2 + 2).not.toBe(5);
   // });
 // });
+
+describe("User", () => {
+  request(app).post("/users").send({
+    email: "user@example.com",
+    name: "User Example"
+  });
+});
