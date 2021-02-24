@@ -38,8 +38,6 @@ describe("Surveys", () => {
       description: "Description Example"
     });
 
-    console.log(response);
-
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
   });
@@ -51,8 +49,6 @@ describe("Surveys", () => {
     });
 
     const response = await request(app).get("/surveys");
-
-    console.log(response);
 
     // espera que o tamanho do aray seja igual a 2
     expect(response.body.length).toBe(2);
