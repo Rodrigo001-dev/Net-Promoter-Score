@@ -24,5 +24,5 @@ export default async function create(request: Request, response: Response) {
 
   await usersRepository.save(user);
 
-  return response.json(user);
+  return response.status(201).json(user);
 };
