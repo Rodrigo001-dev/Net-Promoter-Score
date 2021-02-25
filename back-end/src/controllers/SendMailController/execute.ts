@@ -5,6 +5,8 @@ import { UsersRepository } from '../../repositories/UsersRepository';
 import { SurveysRepository } from '../../repositories/SurveysRepository';
 import { SurveysUsersRepository } from '../../repositories/SurveysUsersRepository';
 
+import SendMailService from '../../services/SendMailService';
+
 export default async function execute(request: Request, response: Response) {
   const { email, survey_id } = request.body;
 
@@ -32,6 +34,13 @@ export default async function execute(request: Request, response: Response) {
   });
 
   await surveysUsersRepository.save(surveyUser);
+
+  // enviar e-mail para o usuário
+  await SendMailService.executeMailSend(
+    email, 
+    surveyAlreadyExists.title,
+    surveyAlreadyExists.description
+  );
 
   return response.status(201).json(surveyUser);
 };
