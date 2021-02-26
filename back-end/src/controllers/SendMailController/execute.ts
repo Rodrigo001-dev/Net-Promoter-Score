@@ -43,7 +43,8 @@ export default async function execute(request: Request, response: Response) {
   // se tiver alguma pesquisa para aquele id do usuário que tenha o valor de
   // como nulo então a aplicação vai retornar para mim
   const surveyUserAlreadyExists = await surveysUsersRepository.findOne({
-    where: [{ user_id: userAlreadyExists.id }, { value: null }]
+    where: [{ user_id: userAlreadyExists.id }, { value: null }],
+    relations: ["user", "survey"],
   });
 
   if (surveyUserAlreadyExists) {
