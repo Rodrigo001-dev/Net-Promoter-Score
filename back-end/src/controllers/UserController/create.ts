@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { UsersRepository } from '../../repositories/UsersRepository';
 
+import { AppError } from '../../errors/AppError';
+
 import * as yup from 'yup';
 
 export default async function create(request: Request, response: Response) {
@@ -26,7 +28,7 @@ export default async function create(request: Request, response: Response) {
     // o abortEarly: false serve para rodar todas as validações de uma vez
     await schema.validate(request.body, { abortEarly: false });
   } catch (error) {
-    return response.status(400).json({ error });
+    throw new AppError(error);
   };
 
   const usersRepository = getCustomRepository(UsersRepository);
@@ -38,7 +40,7 @@ export default async function create(request: Request, response: Response) {
 
   // se tentar cadastrar um email existente vai dar um erro
   if (userAlreadyExists) {
-    return response.status(400).json({ error: "User already exists!" });
+    throw new AppError("User already exists!");
   };
 
   const user = usersRepository.create({

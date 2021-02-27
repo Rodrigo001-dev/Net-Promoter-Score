@@ -7,6 +7,8 @@ import { UsersRepository } from '../../repositories/UsersRepository';
 import { SurveysRepository } from '../../repositories/SurveysRepository';
 import { SurveysUsersRepository } from '../../repositories/SurveysUsersRepository';
 
+import { AppError } from '../../errors/AppError';
+
 import SendMailService from '../../services/SendMailService';
 
 export default async function execute(request: Request, response: Response) {
@@ -20,13 +22,13 @@ export default async function execute(request: Request, response: Response) {
 
   // se o usuário não existir vai retornar um erro 
   if (!userAlreadyExists) {
-    return response.status(400).json({ error: "User does not exists!" });
+    throw new AppError("User does not exists!");
   };
 
   const surveyAlreadyExists = await surveysRepository.findOne({ id: survey_id });
 
   if (!surveyAlreadyExists) {
-    return response.status(400).json({ error: "Survey does not exists!" });
+    throw new AppError("Survey does not exists!");
   };
 
   // __dirname vai pegar o diretório exato da aplicação 

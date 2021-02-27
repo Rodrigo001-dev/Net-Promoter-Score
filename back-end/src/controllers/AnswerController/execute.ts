@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 
+import { AppError } from '../../errors/AppError';
+
 import { SurveysUsersRepository } from '../../repositories/SurveysUsersRepository';
 
 export default async function execute(request: Request, response: Response) {
@@ -27,7 +29,11 @@ export default async function execute(request: Request, response: Response) {
   });
 
   if (!surveyUser) {
-    return response.status(400).json({ error: "Survey User does not exists!" });
+    // sempre que tiver um erro vai utilizar o throw new AppError() => vai lançar
+    // uma exceção e essa exceção vai sempre jogando o erro para sima, ou seja,
+    // vai jogar o erro para o routes.ts porque é ele que está chamando os
+    // controllers e quem está lendo o routes.ts é o app.ts 
+    throw new AppError("Survey User does not exists!");
   };
 
   // estou forçando o value que esta vindo dos Route Params a ser um Number
