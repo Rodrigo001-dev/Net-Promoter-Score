@@ -6,9 +6,9 @@ qualquer área da empresa.
 ## 🚀 Tecnologias/Bibliotecas utilizadas
 
 <div align="start">
-    <a href="https://www.typescriptlang.org/" target="_blank" > <img src="https://img.shields.io/badge/-Typescript-blue?style=for-the-badge" alt="Typescript"> </a>
+    <a href="https://www.typescriptlang.org/" target="_blank"> <img src="https://img.shields.io/badge/-Typescript-blue?style=for-the-badge" alt="Typescript"> </a>
     <a href="https://nodejs.org/en/" target="_blank"> <img src="https://img.shields.io/badge/-Node.js-green?style=for-the-badge" alt="Node.js"> </a>
-    <a href="https://expressjs.com/pt-br/" target="_blank" > <img src="https://img.shields.io/badge/-Express-white?style=for-the-badge" alt="Express"> </a>
+    <a href="https://expressjs.com/pt-br/" target="_blank"> <img src="https://img.shields.io/badge/-Express-white?style=for-the-badge" alt="Express"> </a>
     <a href="https://typeorm.io/#/" target="_blank"> <img src="https://img.shields.io/badge/-typeORM-orange?style=for-the-badge" alt="TypeORM"> </a>
 </div>
 
