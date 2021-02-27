@@ -20,7 +20,7 @@ class SendMailService {
           user: account.user,
           pass: account.pass
         }
-      });
+      })
 
       // esta pegando o valor do transporter e colocando dentro da variavel
       // client

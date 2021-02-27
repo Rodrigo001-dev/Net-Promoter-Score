@@ -29,25 +29,29 @@ export default async function execute(request: Request, response: Response) {
     return response.status(400).json({ error: "Survey does not exists!" });
   };
 
-  const variables = {
-    name: userAlreadyExists.name,
-    title: surveyAlreadyExists.title,
-    description: surveyAlreadyExists.description,
-    user_id: userAlreadyExists.id,
-    link: process.env.URL_MAIL
-  };
-
   // __dirname vai pegar o diretório exato da aplicação 
   const npsPath = resolve(__dirname, "..", "..", "views", "emails", "npsMail.hbs");
 
   // se tiver alguma pesquisa para aquele id do usuário que tenha o valor de
   // como nulo então a aplicação vai retornar para mim
   const surveyUserAlreadyExists = await surveysUsersRepository.findOne({
-    where: [{ user_id: userAlreadyExists.id }, { value: null }],
+    where: { user_id: userAlreadyExists.id, value: null },
     relations: ["user", "survey"],
   });
 
+  const variables = {
+    name: userAlreadyExists.name,
+    title: surveyAlreadyExists.title,
+    description: surveyAlreadyExists.description,
+    id: "",
+    link: process.env.URL_MAIL
+  };
+
   if (surveyUserAlreadyExists) {
+    // se existir uma pesquisa do usuário então eu vou colocar o valor de id nas
+    // variables como o id da
+    // pesquisa do usuário que existe(surveyUserAlreadyExists)
+    variables.id = surveyUserAlreadyExists.id;
     await SendMailService.executeMailSend(
       email, 
       surveyAlreadyExists.title,
@@ -66,6 +70,10 @@ export default async function execute(request: Request, response: Response) {
 
   
   await surveysUsersRepository.save(surveyUser);
+
+  // se não existir uma pesquisa do usuário, depois de salvar no banco de dados
+  // vai colcar o id que foi gerado(criado) como o id dentro das variables
+  variables.id = surveyUser.id;
 
   // enviar e-mail para o usuário
   await SendMailService.executeMailSend(
